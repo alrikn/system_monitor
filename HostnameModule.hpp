@@ -22,6 +22,7 @@ class HostnameModule : public Krell::IModule<std::string> { //we have to declare
 
         std::string get_value() override {return _hostname;}
         std::string get_string() override {return _hostname;}
+        bool is_percentage() override {return false;}
 };
 
 #endif
