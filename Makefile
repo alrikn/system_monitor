@@ -6,8 +6,8 @@
 ##
 
 NAME = MyGKrellm
-SRC = CpuModule.cpp \
-	main.cpp
+SRC = main.cpp
+# SRC += CpuModule.cpp
 
 
 

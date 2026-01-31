@@ -27,5 +27,6 @@ class IModule
         virtual bool is_percentage() = 0;
 };
 
+}  // namespace Krell
+
 #endif
-}
