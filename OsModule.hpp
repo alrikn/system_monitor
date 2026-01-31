@@ -18,7 +18,7 @@ class OsModule : public Krell::IModule<std::string> { //we have to declare what 
             uname(&buf);
             _osname = buf.sysname;
         }
-        std::string get_name() override {return "OS name";}
+        std::string get_name() override {return "Os Name";}
         int get_height() override {return 1;}
 
         std::string get_value() override {return _osname;}
