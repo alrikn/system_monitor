@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-class UsernameModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class OsModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
         std::string _osname;
     public:
