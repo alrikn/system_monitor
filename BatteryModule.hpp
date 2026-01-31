@@ -25,7 +25,7 @@ class BatteryModule : public Krell::IModule<float> { //we have to declare what t
         int get_height() override {return 1;}
 
         float get_value() override {return _bat;}
-        std::string get_string() override {return std::to_string(_bat);}
+        std::string get_string() override {return std::to_string(_bat * 100).append(" %");}
         bool is_percentage() override {return true;}
 };
 

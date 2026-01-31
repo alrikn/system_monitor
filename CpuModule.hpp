@@ -106,7 +106,7 @@ class CpuUseModule : public Krell::IModule<float> { //we have to declare what th
         int get_height() override { return 1; }
 
         float get_value() override {return _usage;}
-        std::string get_string() override {return std::to_string(_usage);}
+        std::string get_string() override {return std::to_string(_usage * 100).append(" %");}
         bool is_percentage() override {return true;}
 
 };
