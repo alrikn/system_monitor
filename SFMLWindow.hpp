@@ -25,9 +25,9 @@ class SFMLWindow : public IDisplay::Window
         const sf::Color _percentageColor = sf::Color(100,200,255);
 
         //helpers
-        void drawModule(const std::shared_ptr<IModule<std::string>>& module, int yOffset);
+        void drawModule(const std::shared_ptr<IModule>& module, int yOffset);
 
-        void drawPercentageBar(const std::shared_ptr<IModule<std::string>>& module, int yPos, int width);
+        void drawPercentageBar(const std::shared_ptr<IModule>& module, int yPos, int width);
 
         sf::Color getProgressBarColor(float percentage) const;
 
@@ -47,11 +47,11 @@ class SFMLWindow : public IDisplay::Window
 
         std::string getName() const override;
 
-        void run(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) override;
+        void run(const std::vector<std::shared_ptr<IModule>>& modules) override;
 
-        void calcHeight(const std::vector<std::shared_ptr<IModule<std::string>>>& modules);
+        void calcHeight(const std::vector<std::shared_ptr<IModule>>& modules);
 
-        void render(const std::vector<std::shared_ptr<IModule<std::string>>>& modules);
+        void render(const std::vector<std::shared_ptr<IModule>>& modules);
 
         bool isOpen() const;
 };

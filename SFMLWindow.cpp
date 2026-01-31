@@ -74,7 +74,7 @@ std::string SFMLWindow::getName() const
     return "MyGKrellm";
 }
 
-void SFMLWindow::run(const std::vector<std::shared_ptr<IModule<std::string>>>& modules)
+void SFMLWindow::run(const std::vector<std::shared_ptr<IModule>>& modules)
 {
     calcHeight(modules);
     create();
@@ -88,7 +88,7 @@ void SFMLWindow::run(const std::vector<std::shared_ptr<IModule<std::string>>>& m
     destroy();
 }
 
-void SFMLWindow::calcHeight(const std::vector<std::shared_ptr<IModule<std::string>>>& modules)
+void SFMLWindow::calcHeight(const std::vector<std::shared_ptr<IModule>>& modules)
 {
     _totalHeight = 0;
     for (const auto& module : modules)
@@ -103,7 +103,7 @@ void SFMLWindow::calcHeight(const std::vector<std::shared_ptr<IModule<std::strin
     }
 }
 
-void SFMLWindow::render(const std::vector<std::shared_ptr<IModule<std::string>>>& modules)
+void SFMLWindow::render(const std::vector<std::shared_ptr<IModule>>& modules)
 {
     if (!_window.isOpen())
         return;
@@ -126,7 +126,7 @@ bool SFMLWindow::isOpen() const
     return _window.isOpen();
 }
 
-void SFMLWindow::drawModule(const std::shared_ptr<IModule<std::string>>& module, int yOffset)
+void SFMLWindow::drawModule(const std::shared_ptr<IModule>& module, int yOffset)
 {
     int moduleHeight = module->get_height() * 100;
 
@@ -163,9 +163,9 @@ void SFMLWindow::drawModule(const std::shared_ptr<IModule<std::string>>& module,
     }
 }
 
-void SFMLWindow::drawPercentageBar(const std::shared_ptr<IModule<std::string>>& module, int yPos, int width)
+void SFMLWindow::drawPercentageBar(const std::shared_ptr<IModule>& module, int yPos, int width)
 {
-    float percentage = module->get_value();
+    float percentage = std::get<float>(module->get_value()); //No viable conversion from 'ModuleValue' (aka 'variant<float, basic_string<char>, int>') to 'float'
 
     //0-100
     percentage = std::max(0.0f, std::min(100.0f, percentage));
