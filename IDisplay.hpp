@@ -10,6 +10,11 @@
 class IDisplay
 {
     public:
+
+        virtual ~IDisplay() = default;
+        
+        virtual void run(const std::vector<std::shared_ptr<Imodule>>& modules) = 0;
+
         // handle window lifecycle
         class Window {
             public:
@@ -18,16 +23,12 @@ class IDisplay
 
                 virtual void create() = 0;
                 
-                virtual void destroy() = 0;
-                
+                virtual void destroy() = 0;                
+   
                 // handle input events (keyboard, mouse, window events)
-                virtual void handleEvents() = 0;
+                //virtual void handleEvents() = 0;
         };
 
-        virtual ~IDisplay() = default;
-
-        // main loop - orchestrates window lifecycle and module updates
-        virtual void run(const std::vector<std::shared_ptr<Imodule>>& modules) = 0;
 
         // below old stuff
         //place to store all the Imodule pointer to update all at once
