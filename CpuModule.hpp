@@ -126,10 +126,14 @@ class CpuNameModule : public Krell::IModule<std::string> { //we have to declare 
                 std::string line;
 
                 while (std::getline(file, line)) {
-                    if (line.rfind("model name", 0) != 0)
+                    if (line.rfind("model name", 0) == 0)
                         break;
                 }
                 //model name      : Intel(R) Core(TM) Ultra 5 125U
+                std::string key; //"model name" we don't care about
+                std::stringstream ss(line);
+                std::getline(ss, key, ':');
+                std::getline(ss, _cpuname);
 
             }
         }
