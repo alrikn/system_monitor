@@ -1,6 +1,6 @@
 
-#ifndef INCLUDED_TIMEMODULE_HPP
-    #define INCLUDED_TIMEMODULE_HPP
+#ifndef INCLUDED_HOSTMODULE_HPP
+    #define INCLUDED_HOSTMODULE_HPP
 
 #include "IModule.hpp"
 #include <string>
