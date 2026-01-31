@@ -11,6 +11,7 @@
 #include "UserModule.hpp"
 #include "OsModule.hpp"
 #include "BasicNcurses.hpp"
+#include "KernelModule.hpp"
 
 using namespace Krell;
 
@@ -31,6 +32,7 @@ int main() {
     modules.push_back(std::make_shared<HostModule>());
     modules.push_back(std::make_shared<UserModule>());
     modules.push_back(std::make_shared<OsModule>());
+    modules.push_back(std::make_shared<KernelModule>());
     modules.push_back(std::make_shared<DateModule>());
     modules.push_back(std::make_shared<TimeModule>());
     // modules.push_back(std::make_shared<CpuNumModule>());  // TODO: fix CpuModule
