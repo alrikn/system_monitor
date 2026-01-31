@@ -58,7 +58,7 @@ class BasicNcurses : public Krell::IDisplay {
             int content_y = 2;
             int modules_per_row = 2;
             int module_width = (max_x - 3) / modules_per_row;
-            int module_height = 5;
+            int module_height = 4;
             
             // title
             attron(A_BOLD);
