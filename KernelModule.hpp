@@ -10,7 +10,7 @@
 
 class KernelModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
-        std::string _release;
+        std::string _release = "Unknown";
     public:
         void update() override { //https://lindevs.com/get-linux-kernel-version-using-cpp
             struct utsname buf;

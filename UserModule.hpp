@@ -9,7 +9,7 @@
 
 class UserModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
-        std::string _username;
+        std::string _username = "Unknown";
     public:
         void update() override {
             _username = getpwuid(geteuid())->pw_name;

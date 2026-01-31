@@ -10,7 +10,7 @@
 
 class OsModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
-        std::string _osname;
+        std::string _osname = "Unknown";
     public:
         void update() override { //https://www.ibm.com/docs/en/zvm/7.3.0?topic=descriptions-uname-display-current-operating-system-name
             struct utsname buf;

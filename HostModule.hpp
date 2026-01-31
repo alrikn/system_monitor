@@ -9,7 +9,7 @@
 
 class HostModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
-        std::string _hostname;
+        std::string _hostname = "Unknown";
     public:
         void update() override { //https://www.ibm.com/docs/en/zos/2.5.0?topic=calls-gethostname
             char buf[256];
