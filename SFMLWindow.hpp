@@ -9,7 +9,7 @@
 
 namespace Krell {
 
-class SFMLWindow : public IDisplay::Window
+class SFMLWindow : public IDisplay
 {
     private:
         sf::RenderWindow _window;

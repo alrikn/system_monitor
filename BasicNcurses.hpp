@@ -10,7 +10,7 @@
 
 namespace Krell {
 
-class BasicNcurses : public Krell::IDisplay::Window {
+class BasicNcurses : public Krell::IDisplay {
     private:
         bool _running;
 

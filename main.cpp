@@ -26,7 +26,7 @@ void signalHandler(int signum) {
     g_shouldExit = true;
 }
 
-int runner(std::vector<std::shared_ptr<IModule>> modules, IDisplay::Window *display_class )
+int runner(std::vector<std::shared_ptr<IModule>> modules, IDisplay *display_class )
 {
     display_class->run(modules);
     return 0;
