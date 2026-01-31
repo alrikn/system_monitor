@@ -5,6 +5,7 @@
 
 #include "BatteryModule.hpp"
 #include "CpuModule.hpp"
+#include "IDisplay.hpp"
 #include "IModule.hpp"
 #include "TimeModule.hpp"
 #include "DateModule.hpp"
@@ -25,7 +26,14 @@ void signalHandler(int signum) {
     g_shouldExit = true;
 }
 
-int main() {
+int runner(std::vector<std::shared_ptr<IModule>> modules, IDisplay::Window *display_class )
+{
+    display_class->run(modules);
+    return 0;
+}
+
+int main(int argc, char **argv)
+{
     std::signal(SIGINT, signalHandler);
 
     // create modules
@@ -41,6 +49,8 @@ int main() {
 
     // create and run nCurses display
     BasicNcurses display;
+
+    runner(modules, &display);
     display.run(modules);
 
     return 0;
