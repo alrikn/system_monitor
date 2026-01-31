@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 
-class HostnameModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class HostModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
         std::string _hostname;
     public:
