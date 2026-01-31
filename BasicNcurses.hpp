@@ -2,13 +2,15 @@
 #ifndef INCLUDED_BASICNCURSES_HPP
     #define INCLUDED_BASICNCURSES_HPP
 
-#include <iostream>
-#include "IDisplay.hpp"
 #include <ncurses.h>
 #include <vector>
 #include <memory>
+#include <unistd.h>
+#include "IDisplay.hpp"
 
-class BasicNcurses : public IDisplay {
+namespace Krell {
+
+class BasicNcurses : public Krell::IDisplay::Window {
     private:
         bool _running;
 
@@ -17,55 +19,53 @@ class BasicNcurses : public IDisplay {
 
         virtual ~BasicNcurses() = default;
 
-        void init(const std::vector<std::shared_ptr<Imodule>>& modules) override {
-            (void)modules;
-            //the default stuff copied from my_top
+        // create/init ncurses
+        void create() override {
             initscr();
             clear();
             noecho();
             curs_set(0);
-
-            printw("NCURSES DISPLAY\n");
-            printw("Press 'q' to quit\n\n");
-            refresh();
         }
 
-        void cleanup() override {
+        // destroy/cleanup ncurses
+        void destroy() override {
             endwin();
         }
 
-        void update(const std::vector<std::shared_ptr<IModule>>& modules) override {
-            clear();
-            printw("=== System Monitor ===\n\n");
-
-            //for all the modules
-            for (const auto& module : modules) {
-                //we print the name first
-                printw("--- %s ---\n", module->name().c_str());
-
-                //printing all the lines of the module
-                for (const auto& line : module->lines()) {
-                    printw("  %s\n", line.c_str());
-                }
-
-                printw("\n");
-            }
-            printw("\nPress 'q' to quit\n");
-            refresh();
-        }
-
+        // check if window is running
         bool isRunning() const override {
             return _running;
         }
 
-        std::string getName() const override {
-            return "BasicNcurses";
+        // clear screen
+        void clear() override {
+            ::clear();  // Call ncurses clear
         }
 
-        //we just chekin for q key
+        // render/display
+        void display() override {
+            refresh();
+        }
+
+        // update display with modules
+        void update(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) {
+            ::clear();
+            printw("=== System Monitor ===\n\n");
+
+            // render all modules
+            for (const auto& module : modules) {
+                printw("--- %s ---\n", module->get_name().c_str());
+                printw("  %s\n", module->get_string().c_str());
+                printw("\n");
+            }
+
+            printw("\nPress 'q' to quit | Ctrl+C to exit\n");
+            refresh();
+        }
+
+        // input events
         void handleEvents() override {
-            // Check for 'q' key
-            timeout(0);// Non-blocking check
+            timeout(0);  // non blocking input
             int ch = getch();
 
             if (ch == 'q' || ch == 'Q') {
@@ -73,7 +73,33 @@ class BasicNcurses : public IDisplay {
             }
             timeout(1000);
         }
+
+        std::string getName() const override {
+            return "BasicNcurses";
+        }
+
+        // main loop
+        void run(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) override {
+            create();
+
+            while (isRunning()) {
+                // update modules
+                for (auto& module : modules) {
+                    module->update();
+                }
+
+                // render and handle input
+                update(modules);
+                handleEvents();
+                display();
+
+                sleep(1);
+            }
+
+            destroy();
+        }
 };
 
-#endif
+}  // namespace Krell
 
+#endif

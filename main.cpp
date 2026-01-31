@@ -3,10 +3,12 @@
 #include <csignal>   // signal handling
 #include <atomic>    // atomic flag
 
-//#include "CpuModule.hpp"
-//#include "IModule.hpp"
-//#include "TimeModule.hpp"
-//#include "BasicNcurses.hpp"
+// #include "CpuModule.hpp"
+#include "IModule.hpp"
+#include "TimeModule.hpp"
+#include "BasicNcurses.hpp"
+
+using namespace Krell;
 
 // flag for ctrl c
 std::atomic<bool> g_shouldExit(false);
@@ -20,14 +22,13 @@ void signalHandler(int signum) {
 int main() {
     std::signal(SIGINT, signalHandler);
 
-    // modules
-    std::vector<std::shared_ptr<IModule>> modules;
+    // create modules
+    std::vector<std::shared_ptr<IModule<std::string>>> modules;
     modules.push_back(std::make_shared<TimeModule>());
-    modules.push_back(std::make_shared<CpuModule>());
+    // modules.push_back(std::make_shared<CpuNumModule>());  // TODO: fix CpuModule
 
     // create and run nCurses display
     BasicNcurses display;
-    // run
     display.run(modules);
 
     return 0;
