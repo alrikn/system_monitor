@@ -8,7 +8,7 @@
 #include <ctime>
 
 
-class DateModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class DateModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         std::string _date = "";
     public:
@@ -24,7 +24,7 @@ class DateModule : public Krell::IModule<std::string> { //we have to declare wha
         std::string get_name() override { return "Date"; }
         int get_height() override { return 1; }
 
-        std::string get_value() override {return _date;}
+        ModuleValue get_value() override {return _date;}
         std::string get_string() override {return _date;}
         bool is_percentage() override {return false;}
 

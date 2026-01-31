@@ -14,7 +14,7 @@ class IDisplay
 
         virtual ~IDisplay() = default;
         
-        virtual void run(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) = 0;
+        virtual void run(const std::vector<std::shared_ptr<IModule>>& modules) = 0;
 
         // handle window lifecycle
         class Window {
@@ -36,7 +36,7 @@ class IDisplay
                 
                 virtual std::string getName() const = 0;
                 
-                virtual void run(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) = 0;
+                virtual void run(const std::vector<std::shared_ptr<IModule>>& modules) = 0;
         };
 
 

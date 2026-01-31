@@ -8,7 +8,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-class OsModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class OsModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         std::string _osname = "Unknown";
     public:
@@ -21,7 +21,7 @@ class OsModule : public Krell::IModule<std::string> { //we have to declare what 
         std::string get_name() override {return "OS name";}
         int get_height() override {return 1;}
 
-        std::string get_value() override {return _osname;}
+        ModuleValue get_value() override {return _osname;}
         std::string get_string() override {return _osname;}
         bool is_percentage() override {return false;}
 };

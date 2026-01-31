@@ -48,7 +48,7 @@ class BasicNcurses : public Krell::IDisplay::Window {
         }
 
         // update display with modules
-        void update(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) {
+        void update(const std::vector<std::shared_ptr<IModule>>& modules) {
             ::clear();
             printw("=== System Monitor ===\n\n");
 
@@ -78,7 +78,7 @@ class BasicNcurses : public Krell::IDisplay::Window {
         }
 
         // main loop
-        void run(const std::vector<std::shared_ptr<IModule<std::string>>>& modules) override {
+        void run(const std::vector<std::shared_ptr<IModule>>& modules) override {
             create();
 
             while (isRunning()) {

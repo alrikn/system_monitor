@@ -7,7 +7,7 @@
 #include <unistd.h>
 
 
-class HostModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class HostModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         std::string _hostname = "Unknown";
     public:
@@ -20,7 +20,7 @@ class HostModule : public Krell::IModule<std::string> { //we have to declare wha
         std::string get_name() override {return "Hostname";}
         int get_height() override {return 1;}
 
-        std::string get_value() override {return _hostname;}
+        ModuleValue get_value() override {return _hostname;}
         std::string get_string() override {return _hostname;}
         bool is_percentage() override {return false;}
 };
