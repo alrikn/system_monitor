@@ -11,9 +11,9 @@ class HostnameModule : public Krell::IModule<std::string> { //we have to declare
     private:
         std::string _hostname;
     public:
-        void update() override {
-            //https://www.ibm.com/docs/en/zos/2.5.0?topic=calls-gethostname
+        void update() override { //https://www.ibm.com/docs/en/zos/2.5.0?topic=calls-gethostname
             char buf[256];
+
             gethostname(buf, sizeof(buf));
             _hostname = buf;
         }
