@@ -7,6 +7,7 @@
 #include "CpuModule.hpp"
 #include "IDisplay.hpp"
 #include "IModule.hpp"
+#include "SFMLWindow.hpp"
 #include "TimeModule.hpp"
 #include "DateModule.hpp"
 #include "HostModule.hpp"
@@ -26,10 +27,24 @@ void signalHandler(int signum) {
     g_shouldExit = true;
 }
 
-int runner(std::vector<std::shared_ptr<IModule>> modules, IDisplay *display_class )
+void runner(std::vector<std::shared_ptr<IModule>> modules, IDisplay *display_class )
 {
     display_class->run(modules);
-    return 0;
+    delete display_class;
+}
+
+IDisplay *argv_reader(int argc, char **argv)
+{
+    std::vector<std::string> args(argv, argv + argc); //cool new way
+    if (argc != 2) {
+        return new BasicNcurses;
+    }
+    if (args[1] == "-n")
+        return new BasicNcurses;
+    //if (args[1] == "-s")
+    //    return new SFMLWindow;
+    std::cout << "USAGE:\n\t-n : ncurses display\n\t-s : SFML display" << std::endl;
+    return nullptr;
 }
 
 int main(int argc, char **argv)
@@ -48,10 +63,11 @@ int main(int argc, char **argv)
     modules.push_back(std::make_shared<BatteryModule>());
 
     // create and run nCurses display
-    BasicNcurses display;
+    IDisplay *display = argv_reader(argc, argv);
+    if (!display)
+        return 84;
 
-    runner(modules, &display);
-    display.run(modules);
+    runner(modules, display);
 
     return 0;
 }
