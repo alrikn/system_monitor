@@ -6,7 +6,10 @@
 #include <vector>
 #include <memory>
 #include <unistd.h>
+#include <atomic>
 #include "IDisplay.hpp"
+
+extern std::atomic<bool> g_shouldExit;
 
 namespace Krell {
 
@@ -130,6 +133,10 @@ class BasicNcurses : public Krell::IDisplay {
             int ch = getch();
 
             if (ch == 'q' || ch == 'Q') {
+                _running = false;
+            }
+            
+            if (g_shouldExit) {
                 _running = false;
             }
         }
