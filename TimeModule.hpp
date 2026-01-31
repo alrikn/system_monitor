@@ -2,10 +2,12 @@
 #ifndef INCLUDED_TIMEMODULE_HPP
     #define INCLUDED_TIMEMODULE_HPP
 
-#include "Imodule.hpp"
+#include "IModule.hpp"
 #include <chrono>
+#include <string>
 
-class TimeModule : public IModule {
+
+class TimeModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
         std::string _time;
     public:
@@ -17,12 +19,11 @@ class TimeModule : public IModule {
             _time = buf;
         }
 
-        std::string name() const override { return "Time"; }
-        int height() const override { return 2; }
+        std::string get_name() override { return "Time"; }
+        int get_height() override { return 1; }
 
-        std::vector<std::string> lines() const override {
-            return { _time };
-        }
+        std::string get_value() override {return _time;}
+        std::string get_string() override {return _time;}
 
 
 };

@@ -11,19 +11,20 @@
 
 #include <string>
 #include <vector>
+
+namespace Krell {
+template <typename T>
 class IModule
 {
     protected:
     public:
         virtual ~IModule() = default;
         virtual void update() = 0;
-        //title of the what is being returned
-        virtual std::string name() const = 0;
-        //how many line are gonna be returned by the lines func (title included)
-        virtual int height() const = 0;
-
-        //good for ncurses
-        virtual std::vector<std::string> lines() const = 0;
+        virtual T get_value() = 0;
+        virtual std::string get_string() = 0;
+        virtual std::string get_name() = 0;
+        virtual int get_height() = 0;
 };
 
 #endif
+}
