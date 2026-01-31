@@ -7,6 +7,7 @@
 #include <string>
 #include "IModule.hpp"
 
+namespace Krell {
 class IDisplay
 {
     public:
@@ -40,5 +41,7 @@ class IDisplay
         //handle events? (maybe), like to change displays
         //virtual void handleEvents() = 0;
 };
+
+}
 
 #endif
