@@ -36,14 +36,20 @@ void runner(std::vector<std::shared_ptr<IModule>> modules, IDisplay *display_cla
 
 IDisplay *argv_reader(int argc, char **argv)
 {
-    std::vector<std::string> args(argv, argv + argc); //cool new way
+    std::vector<std::string> args(argv, argv + argc);
     if (argc != 2) {
+        std::cout << "Defaulting to ncurses display" << std::endl;
         return new BasicNcurses;
     }
-    if (args[1] == "-n")
+    if (args[1] == "-n") {
+        std::cout << "Starting ncurses display..." << std::endl;
         return new BasicNcurses;
-    //if (args[1] == "-s")
-    //    return new SFMLWindow;
+    }
+    if (args[1] == "-s") {
+        std::cout << "Starting SFML display..." << std::endl;
+        return new SFMLWindow();
+    }
+
     std::cout << "USAGE:\n\t-n : ncurses display\n\t-s : SFML display" << std::endl;
     return nullptr;
 }
