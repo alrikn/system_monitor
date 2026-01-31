@@ -37,6 +37,11 @@ class CpuNumModule : public Krell::IModule<int> { //we have to declare what the 
 
 };
 
+
+
+/*
+Cpu module : calculating use percentage
+*/
 class CpuUseModule : public Krell::IModule<float> { //we have to declare what the type T is for the get_value
     private:
         int _num = 0;
@@ -103,6 +108,41 @@ class CpuUseModule : public Krell::IModule<float> { //we have to declare what th
         std::string get_string() override {return std::to_string(_usage);}
         bool is_percentage() override {return true;}
 
+};
+
+/*
+gets name of module
+*/
+class CpuNameModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+    private:
+        std::string _cpuname = "";
+        bool _initialised = false; //cpu name is not gonna change
+    public:
+        //https://www.redhat.com/en/blog/get-cpu-information-linux
+        void update() override {
+            if (!_initialised) {
+                _initialised = true;
+                std::ifstream file("/proc/cpuinfo");
+                std::string line;
+
+                while (std::getline(file, line)) {
+                    if (line.rfind("model name", 0) == 0)
+                        break;
+                }
+                //model name      : Intel(R) Core(TM) Ultra 5 125U
+                std::string key; //"model name" we don't care about
+                std::stringstream ss(line);
+                std::getline(ss, key, ':');
+                std::getline(ss, _cpuname);
+
+            }
+        }
+        std::string get_name() override {return "CPU name";}
+        int get_height() override {return 1;}
+
+        std::string get_value() override {return _cpuname;}
+        std::string get_string() override {return _cpuname;}
+        bool is_percentage() override {return false;}
 };
 
 

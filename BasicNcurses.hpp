@@ -71,7 +71,6 @@ class BasicNcurses : public Krell::IDisplay::Window {
             if (ch == 'q' || ch == 'Q') {
                 _running = false;
             }
-            timeout(1000);
         }
 
         std::string getName() const override {
@@ -93,7 +92,8 @@ class BasicNcurses : public Krell::IDisplay::Window {
                 handleEvents();
                 display();
 
-                sleep(1);
+                // short sleep to reduce CPU usage but allow quick exit
+                usleep(100000);  // 100ms instead of 1s
             }
 
             destroy();
