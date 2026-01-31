@@ -31,6 +31,8 @@ class SFMLWindow : public IDisplay
 
         sf::Color getProgressBarColor(float percentage) const;
 
+        void updateWindowSize();
+
     public:
         SFMLWindow();
 

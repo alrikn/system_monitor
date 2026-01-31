@@ -14,7 +14,7 @@ void SFMLWindow::create()
     _totalHeight = 600;
     _window.create(sf::VideoMode(_width, _totalHeight), _title);
     _window.setFramerateLimit(60);
-    _font.loadFromFile("assets/text.otf");
+    _font.loadFromFile("assets/medodica.otf");
 }
 
 void SFMLWindow::destroy()
@@ -91,21 +91,32 @@ void SFMLWindow::run(const std::vector<std::shared_ptr<IModule>>& modules)
     destroy();
 }
 
+
 void SFMLWindow::calcHeight(const std::vector<std::shared_ptr<IModule>>& modules)
 {
-    _totalHeight = 20;
+    int newHeight = 10;
     for (const auto& module : modules)
     {
-        _totalHeight += module->get_height() * 100;
+        newHeight += module->get_height() * 60;
     }
+    if (newHeight < 200) {
+        newHeight = 200;
+    }
+    _totalHeight = newHeight;
 
+    updateWindowSize();
+}
+
+void SFMLWindow::updateWindowSize()
+{
     if (_window.isOpen())
     {
         _window.setSize(sf::Vector2u(_width, _totalHeight));
-        //sf::View view = _window.getView();
-        //view.setSize(_width, _totalHeight);
-        //view.setCenter(_width / 2, _totalHeight / 2);
-        //_window.setView(view);
+
+        sf::View view = _window.getDefaultView();
+        view.setSize(_width, _totalHeight);
+        view.setCenter(_width / 2, _totalHeight / 2);
+        _window.setView(view);
     }
 }
 
@@ -123,7 +134,7 @@ void SFMLWindow::render(const std::vector<std::shared_ptr<IModule>>& modules)
     for (const auto& module : modules)
     {
         drawModule(module, yOffset);
-        yOffset += module->get_height() * 100;
+        yOffset += module->get_height() * 60;
     }
 
     _window.display();
@@ -136,9 +147,8 @@ bool SFMLWindow::isOpen() const
 
 void SFMLWindow::drawModule(const std::shared_ptr<IModule>& module, int yOffset)
 {
-    int moduleHeight = module->get_height() * 100;
+    int moduleHeight = module->get_height() * 60;
 
-    //module bg
     sf::RectangleShape background(sf::Vector2f(_width - 20, moduleHeight - 10));
     background.setPosition(10, yOffset);
     background.setFillColor(_moduleBgColor);
@@ -146,29 +156,26 @@ void SFMLWindow::drawModule(const std::shared_ptr<IModule>& module, int yOffset)
     background.setOutlineColor(_textColor);
     _window.draw(background);
 
-    // name
     sf::Text nameText;
     nameText.setFont(_font);
     nameText.setString(module->get_name());
-    nameText.setCharacterSize(24);
+    nameText.setCharacterSize(20);
     nameText.setFillColor(_titleColor);
-    nameText.setPosition(20, yOffset + 10);
+    nameText.setPosition(15, yOffset + 5);
     _window.draw(nameText);
 
-    // value
     sf::Text valueText;
     valueText.setFont(_font);
     valueText.setString(module->get_string());
-    valueText.setCharacterSize(32);
+    valueText.setCharacterSize(25);
     valueText.setFillColor(module->is_percentage() ? _percentageColor : _textColor);
-    valueText.setPosition(20, yOffset + 50);
+    valueText.setPosition(15, yOffset + 20);
     _window.draw(valueText);
 
-    //percentage bar
     if (module->is_percentage())
     {
         try {
-            drawPercentageBar(module, yOffset + 90, _width - 60);
+            drawPercentageBar(module, yOffset + 65, _width - 60);
         } catch (const std::bad_variant_access& e) {
         }
     }
@@ -189,31 +196,27 @@ void SFMLWindow::drawPercentageBar(const std::shared_ptr<IModule>& module, int y
         }
     }
 
-    //0-100
     percentage = std::max(0.0f, std::min(100.0f, percentage));
 
-    //bg bar
-    sf::RectangleShape barBackground(sf::Vector2f(width, 20));
-    barBackground.setPosition(20, yPos);
+    sf::RectangleShape barBackground(sf::Vector2f(width, 25));
+    barBackground.setPosition(15, yPos);
     barBackground.setFillColor(sf::Color(50, 50, 50));
     barBackground.setOutlineThickness(1);
     barBackground.setOutlineColor(sf::Color(80, 80, 80));
     _window.draw(barBackground);
 
-    //fill
     float fillWidth = (percentage / 100.0f) * width;
-    sf::RectangleShape barFill(sf::Vector2f(fillWidth, 18));
-    barFill.setPosition(21, yPos + 1);
+    sf::RectangleShape barFill(sf::Vector2f(fillWidth, 23));
+    barFill.setPosition(16, yPos + 1);
     barFill.setFillColor(getProgressBarColor(percentage));
     _window.draw(barFill);
 
-    //text
     sf::Text percentText;
     percentText.setFont(_font);
     percentText.setString(module->get_string());
-    percentText.setCharacterSize(16);
+    percentText.setCharacterSize(14);
     percentText.setFillColor(sf::Color::White);
-    percentText.setPosition(width - 60, yPos);
+    percentText.setPosition(width - 200, yPos + 5);
     _window.draw(percentText);
 }
 
