@@ -2,35 +2,43 @@
 #ifndef INCLUDED_IDISPLAY_HPP
     #define INCLUDED_IDISPLAY_HPP
 
-#include <iostream>
 #include <vector>
 #include <memory>
 #include <string>
-#include "Imodule.hpp"
+#include "IModule.hpp"
 
 class IDisplay
 {
-    protected:
     public:
+
         virtual ~IDisplay() = default;
+        
+        virtual void run(const std::vector<std::shared_ptr<Imodule>>& modules) = 0;
 
-        //init display
-        virtual void init() = 0;
+        // handle window lifecycle
+        class Window {
+            public:
+                Window() {}
+                virtual ~Window() = default;
 
-        //clend display
-        virtual void cleanup() = 0;
+                virtual void create() = 0;
+                
+                virtual void destroy() = 0;                
+   
+                // handle input events (keyboard, mouse, window events)
+                //virtual void handleEvents() = 0;
+        };
 
+
+        // below old stuff
         //place to store all the Imodule pointer to update all at once
-        virtual void update(const std::vector<std::shared_ptr<IModule>>& modules) = 0;
-
-        //seems self-explanatory
-        virtual bool isRunning() const = 0;
+        //virtual void update(const std::vector<std::shared_ptr<Imodule>>& modules) = 0;
 
         //da display name
-        virtual std::string getName() const = 0;
+        //virtual std::string getName() const = 0;
 
         //handle events? (maybe), like to change displays
-        virtual void handleEvents() = 0;
+        //virtual void handleEvents() = 0;
 };
 
 #endif

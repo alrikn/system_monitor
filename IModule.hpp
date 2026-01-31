@@ -24,6 +24,7 @@ class IModule
         virtual std::string get_string() = 0;
         virtual std::string get_name() = 0;
         virtual int get_height() = 0;
+        virtual bool is_percentage() = 0;
 };
 
 #endif

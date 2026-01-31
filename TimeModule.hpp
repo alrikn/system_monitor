@@ -9,7 +9,7 @@
 
 class TimeModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
     private:
-        std::string _time;
+        std::string _time = "";
     public:
         void update() override {
             auto now = std::chrono::system_clock::now();
@@ -24,7 +24,7 @@ class TimeModule : public Krell::IModule<std::string> { //we have to declare wha
 
         std::string get_value() override {return _time;}
         std::string get_string() override {return _time;}
-
+        bool is_percentage() override {return false;}
 
 };
 
