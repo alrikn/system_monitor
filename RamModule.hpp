@@ -39,7 +39,7 @@ class RamModule : public Krell::IModule {
             _usage = ((total_memory - available_memory) / (float)total_memory) * 100.0f;
         }
         std::string get_name() override {return "Ram Usage";}
-        int get_height() override {return 1;}
+        int get_height() override {return 2;}
 
         ModuleValue get_value() override {return _usage;}
         std::string get_string() override {return std::to_string(_usage).append(" %");}

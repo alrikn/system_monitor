@@ -103,7 +103,7 @@ class CpuUseModule : public Krell::IModule { //we have to declare what the type 
         }
 
         std::string get_name() override { return "Cpu Usage"; }
-        int get_height() override { return 1; }
+        int get_height() override { return 2; }
 
         ModuleValue get_value() override {return _usage;}
         std::string get_string() override {return std::to_string(_usage).append(" %");}
