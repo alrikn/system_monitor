@@ -19,7 +19,7 @@ using namespace Krell;
 // flag for ctrl c
 std::atomic<bool> g_shouldExit(false);
 
-// sig handler for SIGINT ctrl c
+// sig handler for SIGINT ctrl c THIS IS NOT WORKING 
 void signalHandler(int signum) {
     (void)signum; // suppress unused parameter warning
     g_shouldExit = true;
@@ -36,7 +36,8 @@ int main() {
     modules.push_back(std::make_shared<KernelModule>());
     modules.push_back(std::make_shared<DateModule>());
     modules.push_back(std::make_shared<TimeModule>());
-    modules.push_back(std::make_shared<BatteryModule>());  // TODO: fix CpuModule
+    modules.push_back(std::make_shared<CpuNumModule>());
+    modules.push_back(std::make_shared<BatteryModule>());
 
     // create and run nCurses display
     BasicNcurses display;
