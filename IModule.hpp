@@ -20,6 +20,7 @@ namespace Krell {
 class IModule
 {
     protected:
+        bool display = true;
     public:
         virtual ~IModule() = default;
         virtual void update() = 0;
@@ -28,6 +29,8 @@ class IModule
         virtual std::string get_name() = 0;
         virtual int get_height() = 0;
         virtual bool is_percentage() = 0;
+        bool get_display() {return display;}
+        void set_display(bool val) {display = val;}
 };
 
 }  // namespace Krell
