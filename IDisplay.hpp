@@ -21,7 +21,7 @@ class IDisplay
         virtual void cleanup() = 0;
 
         //place to store all the Imodule pointer to update all at once
-        virtual void update(const std::vector<std::shared_ptr<Imodule>>& modules) = 0;
+        virtual void update(const std::vector<std::shared_ptr<IModule>>& modules) = 0;
 
         //seems self-explanatory
         virtual bool isRunning() const = 0;

@@ -30,7 +30,7 @@ void diplay()
 
     //we make all the modules taht we are going to use in our displays
     //everything is a shered pointer in case we need to pass stuff to a 
-    std::vector<std::shared_ptr<Imodule>> modules;
+    std::vector<std::shared_ptr<IModule>> modules;
     modules.push_back(std::make_shared<TimeModule>());
     modules.push_back(std::make_shared<CpuModule>());
 

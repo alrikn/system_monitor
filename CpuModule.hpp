@@ -5,7 +5,7 @@
 #include "Imodule.hpp"
 #include <iostream>
 
-class CpuModule : public Imodule
+class CpuModule : public IModule
 {
     private:
         struct CpuTimes {

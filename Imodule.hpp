@@ -11,11 +11,11 @@
 
 #include <string>
 #include <vector>
-class Imodule
+class IModule
 {
     protected:
     public:
-        virtual ~Imodule() = default;
+        virtual ~IModule() = default;
         virtual void update() = 0;
         //title of the what is being returned
         virtual std::string name() const = 0;

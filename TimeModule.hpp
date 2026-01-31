@@ -5,7 +5,7 @@
 #include "Imodule.hpp"
 #include <chrono>
 
-class TimeModule : public Imodule {
+class TimeModule : public IModule {
     private:
         std::string _time;
     public:

@@ -33,7 +33,7 @@ class BasicNcurses : public IDisplay {
             endwin();
         }
 
-        void update(const std::vector<std::shared_ptr<Imodule>>& modules) override {
+        void update(const std::vector<std::shared_ptr<IModule>>& modules) override {
             clear();
             printw("=== System Monitor ===\n\n");
 
