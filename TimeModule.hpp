@@ -24,7 +24,7 @@ class TimeModule : public Krell::IModule<std::string> { //we have to declare wha
 
         std::string get_value() override {return _time;}
         std::string get_string() override {return _time;}
-
+        bool is_percentage() override {return false;}
 
 };
 
