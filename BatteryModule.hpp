@@ -14,8 +14,12 @@ class BatteryModule : public Krell::IModule { //we have to declare what the type
         void update() override {
             std::ifstream batt_file;
 
-            batt_file.open("/sys/class/power_supply/BAT0/capacity");
-
+            for (int i = 0; i <= 9; i++) {
+                std::string path = "/sys/class/power_supply/BAT" + std::to_string(i) + "/capacity";
+                batt_file.open(path);
+                if (batt_file.is_open())
+                    break;
+            }
             if (batt_file.fail())
                 return;
             batt_file >> _bat;
