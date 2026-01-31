@@ -10,17 +10,20 @@
 
 
 #include <string>
+#include <variant>
 #include <vector>
 
+using ModuleValue = std::variant<float, std::string, int>;
+
 namespace Krell {
-template <typename T>
+
 class IModule
 {
     protected:
     public:
         virtual ~IModule() = default;
         virtual void update() = 0;
-        virtual T get_value() = 0;
+        virtual ModuleValue get_value() = 0;
         virtual std::string get_string() = 0;
         virtual std::string get_name() = 0;
         virtual int get_height() = 0;

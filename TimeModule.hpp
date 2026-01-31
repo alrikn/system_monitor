@@ -7,7 +7,7 @@
 #include <string>
 
 
-class TimeModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class TimeModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         std::string _time = "";
     public:
@@ -22,7 +22,7 @@ class TimeModule : public Krell::IModule<std::string> { //we have to declare wha
         std::string get_name() override { return "Time"; }
         int get_height() override { return 1; }
 
-        std::string get_value() override {return _time;}
+        ModuleValue get_value() override {return _time;}
         std::string get_string() override {return _time;}
         bool is_percentage() override {return false;}
 

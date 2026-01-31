@@ -7,7 +7,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-class UserModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class UserModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         std::string _username = "Unknown";
     public:
@@ -17,7 +17,7 @@ class UserModule : public Krell::IModule<std::string> { //we have to declare wha
         std::string get_name() override {return "Username";}
         int get_height() override {return 1;}
 
-        std::string get_value() override {return _username;}
+        ModuleValue get_value() override {return _username;}
         std::string get_string() override {return _username;}
         bool is_percentage() override {return false;}
 };

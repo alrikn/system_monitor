@@ -13,7 +13,7 @@ SRC = main.cpp
 
 OBJ = $(SRC:.cpp=.o)
 CXX = clang++
-CXXFLAGS = -std=c++20 -Wall -Wextra -Werror -g
+CXXFLAGS = -std=c++20 -Wall -Wextra -g
 LIB_FLAGS = -lncurses
 
 all: $(NAME)

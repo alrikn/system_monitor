@@ -9,7 +9,7 @@
 #include <sstream>
 #include <iomanip>
 
-class CpuNumModule : public Krell::IModule<int> { //we have to declare what the type T is for the get_value
+class CpuNumModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         int _num = 0;
         bool _initialised = false; //the number of cores will not change in the middle of runtime, we can just get the info once
@@ -31,7 +31,7 @@ class CpuNumModule : public Krell::IModule<int> { //we have to declare what the 
         std::string get_name() override { return "Cpu Number"; }
         int get_height() override { return 1; }
 
-        int get_value() override {return _num;}
+        ModuleValue get_value() override {return _num;}
         std::string get_string() override {return std::to_string(_num);}
         bool is_percentage() override {return false;}
 
@@ -42,7 +42,7 @@ class CpuNumModule : public Krell::IModule<int> { //we have to declare what the 
 /*
 Cpu module : calculating use percentage
 */
-class CpuUseModule : public Krell::IModule<float> { //we have to declare what the type T is for the get_value
+class CpuUseModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         int _num = 0;
         float _use_percentage = 0;
@@ -105,8 +105,8 @@ class CpuUseModule : public Krell::IModule<float> { //we have to declare what th
         std::string get_name() override { return "Cpu %"; }
         int get_height() override { return 1; }
 
-        float get_value() override {return _usage;}
-        std::string get_string() override {return std::to_string(_usage);}
+        ModuleValue get_value() override {return _usage;}
+        std::string get_string() override {return std::to_string(_usage * 100).append(" %");}
         bool is_percentage() override {return true;}
 
 };
@@ -114,7 +114,7 @@ class CpuUseModule : public Krell::IModule<float> { //we have to declare what th
 /*
 gets name of module
 */
-class CpuNameModule : public Krell::IModule<std::string> { //we have to declare what the type T is for the get_value
+class CpuNameModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         std::string _cpuname = "";
         bool _initialised = false; //cpu name is not gonna change
@@ -141,7 +141,7 @@ class CpuNameModule : public Krell::IModule<std::string> { //we have to declare 
         std::string get_name() override {return "CPU name";}
         int get_height() override {return 1;}
 
-        std::string get_value() override {return _cpuname;}
+        ModuleValue get_value() override {return _cpuname;}
         std::string get_string() override {return _cpuname;}
         bool is_percentage() override {return false;}
 };
