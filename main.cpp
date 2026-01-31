@@ -37,7 +37,7 @@ void diplay()
     //make the display (rn is the basic one, but we'll have to add custom stuff later on)
     BasicNcurses display;
 
-    display.init();
+    display.init(modules);
     
     //the main loop (this should run for every func)
     while (display.isRunning() && !g_shouldExit) {

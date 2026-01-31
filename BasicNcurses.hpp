@@ -17,7 +17,8 @@ class BasicNcurses : public IDisplay {
 
         virtual ~BasicNcurses() = default;
 
-        void init() override {
+        void init(const std::vector<std::shared_ptr<Imodule>>& modules) override {
+            (void)modules;
             //the default stuff copied from my_top
             initscr();
             clear();
