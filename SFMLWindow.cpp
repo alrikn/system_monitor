@@ -11,6 +11,7 @@ SFMLWindow::SFMLWindow() : _totalHeight(0), _title("Krell System Monitor")
 
 void SFMLWindow::create()
 {
+    _totalHeight = 600;
     _window.create(sf::VideoMode(_width, _totalHeight), _title);
     _window.setFramerateLimit(60);
     _font.loadFromFile("assets/text.otf");
@@ -76,11 +77,13 @@ std::string SFMLWindow::getName() const
 
 void SFMLWindow::run(const std::vector<std::shared_ptr<IModule>>& modules)
 {
-    calcHeight(modules);
     create();
 
     while (isOpen())
     {
+        for (const auto& module : modules) {
+            module->update();
+        }
         handleEvents();
         render(modules);
     }
@@ -90,16 +93,19 @@ void SFMLWindow::run(const std::vector<std::shared_ptr<IModule>>& modules)
 
 void SFMLWindow::calcHeight(const std::vector<std::shared_ptr<IModule>>& modules)
 {
-    _totalHeight = 0;
+    _totalHeight = 20;
     for (const auto& module : modules)
     {
         _totalHeight += module->get_height() * 100;
     }
-    _totalHeight += 20;
 
     if (_window.isOpen())
     {
         _window.setSize(sf::Vector2u(_width, _totalHeight));
+        //sf::View view = _window.getView();
+        //view.setSize(_width, _totalHeight);
+        //view.setCenter(_width / 2, _totalHeight / 2);
+        //_window.setView(view);
     }
 }
 
@@ -107,6 +113,8 @@ void SFMLWindow::render(const std::vector<std::shared_ptr<IModule>>& modules)
 {
     if (!_window.isOpen())
         return;
+
+    calcHeight(modules);
 
     _window.clear(_bgColor);
 
@@ -159,13 +167,27 @@ void SFMLWindow::drawModule(const std::shared_ptr<IModule>& module, int yOffset)
     //percentage bar
     if (module->is_percentage())
     {
-        drawPercentageBar(module, yOffset + 90, _width - 60);
+        try {
+            drawPercentageBar(module, yOffset + 90, _width - 60);
+        } catch (const std::bad_variant_access& e) {
+        }
     }
 }
 
 void SFMLWindow::drawPercentageBar(const std::shared_ptr<IModule>& module, int yPos, int width)
 {
-    float percentage = std::get<float>(module->get_value()); //No viable conversion from 'ModuleValue' (aka 'variant<float, basic_string<char>, int>') to 'float'
+    ModuleValue value = module->get_value();
+    float percentage = 0.0f;
+
+    try {
+        percentage = std::get<float>(value);
+    } catch (const std::bad_variant_access& e) {
+        try {
+            percentage = static_cast<float>(std::get<int>(value));
+        } catch (const std::bad_variant_access& e2) {
+            return;
+        }
+    }
 
     //0-100
     percentage = std::max(0.0f, std::min(100.0f, percentage));
