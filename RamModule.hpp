@@ -10,7 +10,7 @@
 #include <unistd.h>
 #include <pwd.h>
 
-class RamModule : public Krell::IModule<float> { //we have to declare what the type T is for the get_value
+class RamModule : public Krell::IModule {
     private:
         float _usage = 0.0f;
     public:
@@ -41,7 +41,7 @@ class RamModule : public Krell::IModule<float> { //we have to declare what the t
         std::string get_name() override {return "Ram Usage";}
         int get_height() override {return 1;}
 
-        float get_value() override {return _usage;}
+        ModuleValue get_value() override {return _usage;}
         std::string get_string() override {return std::to_string(_usage).append(" %");}
         bool is_percentage() override {return true;}
 };

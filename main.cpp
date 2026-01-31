@@ -15,6 +15,7 @@
 #include "OsModule.hpp"
 #include "BasicNcurses.hpp"
 #include "KernelModule.hpp"
+#include "RamModule.hpp"
 
 using namespace Krell;
 
@@ -59,11 +60,11 @@ int main(int argc, char **argv)
     modules.push_back(std::make_shared<KernelModule>());
     modules.push_back(std::make_shared<DateModule>());
     modules.push_back(std::make_shared<TimeModule>());
-    modules.push_back(std::make_shared<CpuNumModule>());
+    modules.push_back(std::make_shared<RamModule>());
     modules.push_back(std::make_shared<BatteryModule>());
+    modules.push_back(std::make_shared<CpuNumModule>());
     modules.push_back(std::make_shared<CpuUseModule>());
     modules.push_back(std::make_shared<CpuNameModule>());
-    modules.push_back(std::make_shared<BatteryModule>());
 
     // create and run nCurses display
     IDisplay *display = argv_reader(argc, argv);
