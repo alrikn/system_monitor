@@ -6,6 +6,10 @@
 // #include "CpuModule.hpp"
 #include "IModule.hpp"
 #include "TimeModule.hpp"
+#include "DateModule.hpp"
+#include "HostModule.hpp"
+#include "UserModule.hpp"
+#include "OsModule.hpp"
 #include "BasicNcurses.hpp"
 
 using namespace Krell;
@@ -24,6 +28,10 @@ int main() {
 
     // create modules
     std::vector<std::shared_ptr<IModule<std::string>>> modules;
+    modules.push_back(std::make_shared<HostModule>());
+    modules.push_back(std::make_shared<UserModule>());
+    modules.push_back(std::make_shared<OsModule>());
+    modules.push_back(std::make_shared<DateModule>());
     modules.push_back(std::make_shared<TimeModule>());
     // modules.push_back(std::make_shared<CpuNumModule>());  // TODO: fix CpuModule
 
