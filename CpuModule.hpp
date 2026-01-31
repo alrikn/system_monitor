@@ -75,6 +75,7 @@ class CpuUseModule : public Krell::IModule<float> { //we have to declare what th
             std::string line;
             std::vector<CpuTimes> current;
             _usage = 0;
+            _num = 0;
 
             while (std::getline(file, line)) {
                 if (line.rfind("cpu", 0) != 0)
@@ -91,10 +92,10 @@ class CpuUseModule : public Krell::IModule<float> { //we have to declare what th
             long idle_delta = 0;
             long total_delta = 0;
             for (std::size_t i = 0; i < current.size(); i++) {
-                idle_delta += current[i].idle - _previous[i].idle;
-                total_delta += current[i].total - _previous[i].total;
+                idle_delta = current[i].idle - _previous[i].idle;
+                total_delta = current[i].total - _previous[i].total;
                 if (total_delta > 0) {
-                    _usage += (1.f - static_cast<float>(idle_delta) / total_delta) * 100.f;
+                    _usage += (1.f - (float)idle_delta / total_delta) * 100.f;
                 }
             }
             _usage /= _num;
