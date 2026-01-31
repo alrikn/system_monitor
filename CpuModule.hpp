@@ -11,7 +11,7 @@
 
 class CpuNumModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
-        int _num = 0;
+        int _num = -1;
         bool _initialised = false; //the number of cores will not change in the middle of runtime, we can just get the info once
     public:
         void update() override {
@@ -102,11 +102,11 @@ class CpuUseModule : public Krell::IModule { //we have to declare what the type 
 
         }
 
-        std::string get_name() override { return "Cpu %"; }
+        std::string get_name() override { return "Cpu Usage"; }
         int get_height() override { return 1; }
 
         ModuleValue get_value() override {return _usage;}
-        std::string get_string() override {return std::to_string(_usage * 100).append(" %");}
+        std::string get_string() override {return std::to_string(_usage).append(" %");}
         bool is_percentage() override {return true;}
 
 };
