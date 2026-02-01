@@ -78,10 +78,11 @@ class CpuUseModule : public Krell::IModule { //we have to declare what the type 
             _num = 0;
 
             while (std::getline(file, line)) {
-                if (line.rfind("cpu", 0) != 0)
+                if (line.rfind("cpu ", 0) == 0) {
+                    current.push_back(readLine(line));
+                    _num += 1;
                     break;
-                current.push_back(readLine(line));
-                _num += 1;
+                }
             }
 
             if (!_initialised) {
@@ -99,6 +100,7 @@ class CpuUseModule : public Krell::IModule { //we have to declare what the type 
                 }
             }
             _usage /= _num;
+            //_previous = current;
 
         }
 
