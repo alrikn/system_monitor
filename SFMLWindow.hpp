@@ -25,7 +25,7 @@ class SFMLWindow : public IDisplay
         const sf::Color _textColor = sf::Color(45,45,45);
         const sf::Color _moduleBgColor = sf::Color(220,220,220);
         const sf::Color _titleColor = sf::Color(255,155,0);
-        const sf::Color _percentageColor = sf::Color(100,200,255);
+        const sf::Color _percentageColor = sf::Color(40,120,200);
 
         //helpers
         void drawModule(const std::shared_ptr<IModule>& module, int yOffset);
