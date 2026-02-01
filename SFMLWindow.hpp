@@ -17,6 +17,9 @@ class SFMLWindow : public IDisplay
         const int _width = 500;
         int _totalHeight;
         std::string _title;
+        sf::Vector2i _mousePos;
+        bool _mousePressed = false;
+
 
         const sf::Color _bgColor = sf::Color(30,30,30);
         const sf::Color _textColor = sf::Color(45,45,45);
@@ -32,6 +35,8 @@ class SFMLWindow : public IDisplay
         sf::Color getProgressBarColor(float percentage) const;
 
         void updateWindowSize();
+
+        bool isInside(const sf::Vector2i& mouse, const sf::FloatRect& rect);
 
     public:
         SFMLWindow();

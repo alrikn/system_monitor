@@ -3,6 +3,13 @@
 #include <sstream>
 #include <cmath>
 
+
+static const int MODULE_PADDING = 10;
+static const int HEADER_HEIGHT = 30;
+static const int TOGGLE_SIZE = 16;
+
+
+
 namespace Krell {
 
 SFMLWindow::SFMLWindow() : _totalHeight(0), _title("Krell System Monitor")
@@ -64,6 +71,16 @@ void SFMLWindow::handleEvents()
                     _window.close();
                 }
                 break;
+            case sf::Event::MouseButtonPressed:
+                if (event.mouseButton.button == sf::Mouse::Left) {//left click
+                    _mousePressed = true;
+                    _mousePos = sf::Mouse::getPosition(_window);
+                }
+                break;
+            case sf::Event::MouseButtonReleased:
+                _mousePressed = false;
+                break;
+
             default:
                 break;
         }
@@ -91,13 +108,19 @@ void SFMLWindow::run(const std::vector<std::shared_ptr<IModule>>& modules)
     destroy();
 }
 
-
+/*
+I might have broken this check later
+*/
 void SFMLWindow::calcHeight(const std::vector<std::shared_ptr<IModule>>& modules)
 {
-    int newHeight = 10;
+    int newHeight = MODULE_PADDING;
     for (const auto& module : modules)
     {
-        newHeight += module->get_height() * 60;
+        //newHeight += module->get_height() * 60;
+        newHeight += HEADER_HEIGHT;
+
+        if (module->get_display())
+            newHeight += module->get_height() * 60;
     }
     if (newHeight < 200) {
         newHeight = 200;
@@ -129,12 +152,16 @@ void SFMLWindow::render(const std::vector<std::shared_ptr<IModule>>& modules)
 
     _window.clear(_bgColor);
 
-    int yOffset = 10;
+    int yOffset = MODULE_PADDING;
 
     for (const auto& module : modules)
     {
         drawModule(module, yOffset);
-        yOffset += module->get_height() * 60;
+        //yOffset += module->get_height() * 60;
+        yOffset += HEADER_HEIGHT;
+        if (module->get_display())
+            yOffset += module->get_height() * 60;
+
     }
 
     _window.display();
@@ -147,14 +174,11 @@ bool SFMLWindow::isOpen() const
 
 void SFMLWindow::drawModule(const std::shared_ptr<IModule>& module, int yOffset)
 {
-    int moduleHeight = module->get_height() * 60;
-
-    sf::RectangleShape background(sf::Vector2f(_width - 20, moduleHeight - 10));
-    background.setPosition(10, yOffset);
-    background.setFillColor(_moduleBgColor);
-    background.setOutlineThickness(2);
-    background.setOutlineColor(_textColor);
-    _window.draw(background);
+    //the header with the new button
+    sf::RectangleShape header(sf::Vector2f(_width - 20, HEADER_HEIGHT));
+    header.setPosition(10, yOffset);
+    header.setFillColor(sf::Color(40, 40, 40)); //gray black
+    _window.draw(header);
 
     sf::Text nameText;
     nameText.setFont(_font);
@@ -164,12 +188,45 @@ void SFMLWindow::drawModule(const std::shared_ptr<IModule>& module, int yOffset)
     nameText.setPosition(15, yOffset + 5);
     _window.draw(nameText);
 
+    //button
+    sf::RectangleShape toggle(sf::Vector2f(TOGGLE_SIZE, TOGGLE_SIZE));
+    float toggleX = _width - 30;
+    float toggleY = yOffset + 7;
+
+    toggle.setPosition(toggleX, toggleY);
+    toggle.setFillColor(module->get_display() ? sf::Color::Red : sf::Color(100, 0, 0));
+    _window.draw(toggle);
+
+    //handle click
+    if (_mousePressed &&
+        isInside(_mousePos, toggle.getGlobalBounds()))
+    {
+        module->set_display(!module->get_display());
+        _mousePressed = false; //prevent double toggle
+    }
+
+    //contenet
+    if (!module->get_display())
+        return;
+
+    int contentY = yOffset + HEADER_HEIGHT; //yoofset i da current pos, adding header cus we just did it
+    int moduleHeight = module->get_height() * 60;
+
+    sf::RectangleShape background( //basic background rectangle (looks better, hard to see red on white)
+        sf::Vector2f(_width - 20, moduleHeight - 10)
+    );
+    background.setPosition(10, contentY);
+    background.setFillColor(_moduleBgColor);
+    background.setOutlineThickness(2);
+    background.setOutlineColor(_textColor);
+    _window.draw(background);
+
     sf::Text valueText;
     valueText.setFont(_font);
     valueText.setString(module->get_string());
     valueText.setCharacterSize(25);
     valueText.setFillColor(module->is_percentage() ? _percentageColor : _textColor);
-    valueText.setPosition(15, yOffset + 20);
+    valueText.setPosition(15, contentY + 10);
     _window.draw(valueText);
 
     if (module->is_percentage())
@@ -229,5 +286,11 @@ sf::Color SFMLWindow::getProgressBarColor(float percentage) const
     else
         return sf::Color(0, 200, 0);
 }
+
+bool SFMLWindow::isInside(const sf::Vector2i& mouse, const sf::FloatRect& rect)
+{
+    return rect.contains(static_cast<float>(mouse.x), static_cast<float>(mouse.y));
+}
+
 
 }
