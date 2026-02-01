@@ -45,7 +45,6 @@ Cpu module : calculating use percentage
 class CpuUseModule : public Krell::IModule { //we have to declare what the type T is for the get_value
     private:
         int _num = 0;
-        float _use_percentage = 0;
         bool _initialised = false;
         struct CpuTimes {
             long idle;

@@ -11,6 +11,7 @@
 #include "TimeModule.hpp"
 #include "DateModule.hpp"
 #include "HostModule.hpp"
+#include "UptimeModule.hpp"
 #include "UserModule.hpp"
 #include "OsModule.hpp"
 #include "BasicNcurses.hpp"
@@ -71,6 +72,7 @@ int main(int argc, char **argv)
     modules.push_back(std::make_shared<CpuNumModule>());
     modules.push_back(std::make_shared<CpuUseModule>());
     modules.push_back(std::make_shared<CpuNameModule>());
+    modules.push_back(std::make_shared<UptimeModule>());
 
     // create and run nCurses display
     IDisplay *display = argv_reader(argc, argv);
