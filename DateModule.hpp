@@ -13,13 +13,7 @@ class DateModule : public Krell::IModule { //we have to declare what the type T 
         std::string _date = "";
     public:
         //https://stackoverflow.com/questions/27934034/get-current-time-in-mm-dd-yyyy-in-c
-        void update() override {
-            const int MAXLEN = 80;
-            char s[MAXLEN];
-            time_t t = time(0);
-            strftime(s, MAXLEN, "%d/%m/%Y", localtime(&t));
-            _date = s;
-        }
+        void update() override;
 
         std::string get_name() override { return "Date"; }
         int get_height() override { return 1; }

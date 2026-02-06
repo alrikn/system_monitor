@@ -30,7 +30,7 @@ class IModule
         virtual int get_height() = 0;
         virtual bool is_percentage() = 0;
         bool get_display() {return display;}
-        void set_display(bool val) {display = val;}
+        void set_display(bool val) {display = val;} //TODO make a pure virtual class
 };
 
 }  // namespace Krell

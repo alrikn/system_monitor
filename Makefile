@@ -7,6 +7,12 @@
 
 NAME = MyGKrellm
 SRC = main.cpp \
+	BasicNcurses.cpp \
+	BatteryModule.cpp \
+	CpuModule.cpp \
+	DateModule.cpp \
+	HostModule.cpp \
+	KernelModule.cpp \
 	OsModule.cpp \
 	RamModule.cpp \
 	SFMLWindow.cpp \

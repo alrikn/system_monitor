@@ -5,3 +5,4 @@ a.out
 *.log
 ex0*.cpp
 MyGKrellm
+*.tmp

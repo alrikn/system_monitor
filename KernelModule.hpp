@@ -12,12 +12,7 @@ class KernelModule : public Krell::IModule { //we have to declare what the type 
     private:
         std::string _release = "Unknown";
     public:
-        void update() override { //https://lindevs.com/get-linux-kernel-version-using-cpp
-            struct utsname buf;
-
-            uname(&buf);
-            _release = buf.release;
-        }
+        void update() override;
         std::string get_name() override {return "Kernel Version";}
         int get_height() override {return 1;}
 
