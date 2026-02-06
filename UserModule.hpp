@@ -11,9 +11,7 @@ class UserModule : public Krell::IModule { //we have to declare what the type T 
     private:
         std::string _username = "Unknown";
     public:
-        void update() override {
-            _username = getpwuid(geteuid())->pw_name;
-        }
+        void update() override;
         std::string get_name() override {return "Username";}
         int get_height() override {return 1;}
 

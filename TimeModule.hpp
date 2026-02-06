@@ -11,13 +11,7 @@ class TimeModule : public Krell::IModule { //we have to declare what the type T 
     private:
         std::string _time = "";
     public:
-        void update() override {
-            auto now = std::chrono::system_clock::now();
-            std::time_t t = std::chrono::system_clock::to_time_t(now);
-            char buf[64];
-            std::strftime(buf, sizeof(buf), "%H:%M:%S", std::localtime(&t));
-            _time = buf;
-        }
+        void update() override;
 
         std::string get_name() override { return "Time"; }
         int get_height() override { return 1; }

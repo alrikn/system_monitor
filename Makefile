@@ -6,9 +6,13 @@
 ##
 
 NAME = MyGKrellm
-SRC = main.cpp	\
-		SFMLWindow.cpp
-# SRC += CpuModule.cpp
+SRC = main.cpp \
+	OsModule.cpp \
+	RamModule.cpp \
+	SFMLWindow.cpp \
+	TimeModule.cpp \
+	UptimeModule.cpp \
+	UserModule.cpp \
 
 
 
